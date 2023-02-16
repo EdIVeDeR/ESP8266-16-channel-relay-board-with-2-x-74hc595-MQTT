@@ -3,6 +3,8 @@ ESP8266 16 channel relay board with 2 x 74hc595 and MQTT
 
 This is a code for controlling a 16 channel relay board using an ESP8266 microcontroller and MQTT protocol.
 
+First you will need to change SSID and Password at the begining of the code to match your own Network 
+
 The code includes the necessary libraries for the ESP8266 WiFi and PubSubClient, as well as definitions for the WiFi credentials, MQTT server address, MQTT authentication details, and pin assignments for the 74hc595 shift registers used to control the relays.
 
 The mqttCallback function handles incoming messages from the MQTT server and parses them to determine which relay(s) to turn on or off based on the received message payload. The setRelayState function updates the shift registers and sets the state of the relay(s) accordingly.
