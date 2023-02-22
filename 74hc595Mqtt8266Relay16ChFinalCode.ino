@@ -2,11 +2,13 @@
 #include <PubSubClient.h>
 
 const char* ssid =                "SSID";               // Change this value with your SSID name
-const char* password =            "Password";           // Change this value with your Password
+const char* password =            "PASSWORD";           // Change this value with your Password
 const char* mqttServer =          "192.168.1.100";      // MQTT server adress
 const int   mqttPort =            1883;                 // MQTT server Port
 const char* mqttUser =            "your_MQTT_username"; // MQTT server username
 const char* mqttPassword =        "your_MQTT_password"; // MQTT server password
+const char* topicIn =             "16ChRelay1In";       // MQTT Topic sending to the relays board
+const char* topicOut =            "16ChRelay1Out";      // MQTT Topic Sending from the relay board
 const int   latchPin =            12;                   // Latch Pin of 74hc595
 const int   clockPin =            13;                   // Clock  Pin of 74hc595
 const int   dataPin =             14;                   // Data  Pin of 74hc595
@@ -23,7 +25,7 @@ PubSubClient client(espClient);
 
 void mqttCallback(char *topic, byte *payload, unsigned int length) {
   Serial.print ("Message arrived on Topic:");
-  Serial.print ("16ChRelayOut");
+  Serial.print (topicOut);
   char message[20]={0x00};
 
   for(int i=0;i<length;i++)
@@ -88,12 +90,17 @@ void mqttCallback(char *topic, byte *payload, unsigned int length) {
       }
     }
   }
+  else if (command.equals("RESET BOARD")) {
+    // Reset the microcontroller
+    ESP.reset();
+  }
 
   // Set the state of the relay if a valid command was received
   if (relayNum >= 1 && relayNum <= numRelays) {
     setRelayState(relayNum - 1, newState);
   }
 }
+
 
 
 void setRelayState(int relayNum, bool state) {
@@ -152,7 +159,7 @@ while (!client.connected()) {
   }
   
   if (client.connect("ESP8266Client", mqttUser, mqttPassword)) {
-    client.subscribe("16ChRelayIn");
+    client.subscribe(topicIn);
     failedAttempts = 0; // reset the failed attempts counter
   } else {
     delay(500);
@@ -162,7 +169,7 @@ while (!client.connected()) {
 }
 
 Serial.println("Connected to MQTT server");
-client.publish("16ChRelayOut","16 Channels Relay Board #1 is connect and is listening on Topic 16ChRelayIn");
+client.publish(topicOut,"16 Channels Relay Board #1 is connect and is listening on Topic 16ChRelayIn");
 
 
 
