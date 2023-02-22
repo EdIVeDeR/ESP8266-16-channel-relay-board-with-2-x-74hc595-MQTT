@@ -9,11 +9,11 @@ The code includes the necessary libraries for the ESP8266 WiFi and PubSubClient,
 
 The mqttCallback function handles incoming messages from the MQTT server and parses them to determine which relay(s) to turn on or off based on the received message payload. The setRelayState function updates the shift registers and sets the state of the relay(s) accordingly.
 
-The setup function initializes the serial port and pin modes and attempts to connect to the WiFi network. If the connection is unsuccessful after 25 attempts, the ESP8266 will restart. Once connected to the WiFi network, the code connects to the MQTT server to post a connection confirmation on topic "16ChRelayOut" and subscribes to the "16ChRelayIn" topic to receive incoming messages.
+The setup function initializes the serial port and pin modes and attempts to connect to the WiFi network. If the connection is unsuccessful after 25 attempts, the ESP8266 will restart. Once connected to the WiFi network, the code connects to the MQTT server to post a connection confirmation on topic "16ChRelay1Out" and subscribes to the "16ChRelay1In" topic to receive incoming messages.
 
 The loop function continuously checks for incoming MQTT messages and sends a heartbeat message to the server every 10 seconds to indicate that the ESP8266 is still connected.
 
-Here's the list of the differents caps sensitives commands you can send throught MQTT topic "16ChRelayIn" to control the relays:
+Here's the list of the differents caps sensitives commands you can send throught MQTT topic "16ChRelay1In" to control the relays:
 
 -  RESET BOARD
 -  ALL ON
