@@ -15,6 +15,7 @@ The loop function continuously checks for incoming MQTT messages and sends a hea
 
 Here's the list of the differents caps sensitives commands you can send throught MQTT topic "16ChRelayIn" to control the relays:
 
+-  RESET BOARD
 -  ALL ON
 -  ALL OFF
 -  RELAY 1-8 ON
@@ -53,3 +54,4 @@ Here's the list of the differents caps sensitives commands you can send throught
 -  Relay #15 OFF
 -  Relay #16 ON
 -  Relay #16 OFF
+
