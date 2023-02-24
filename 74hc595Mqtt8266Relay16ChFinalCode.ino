@@ -18,9 +18,9 @@ const int   numRelays =           numRegisters * 8;     // Number of relay on th
 bool        relayState            [numRelays];          // Store the state of each relay
 int         connectionAttempts =  0;                    // Number of connection try for WiFi
 int         failedAttempts =      0;                    // Number of connection try for MQTT server
-IPAddress   subnet                (255, 255, 0, 0);		  // Subnet Mask
-IPAddress   gateway               (192, 168, 1, 1);		  // Default Gateway
-IPAddress   local_IP              (192, 168, 1, 184);	  // Static IP Address for ESP8266
+IPAddress   subnet                (255, 255, 0, 0);     // Subnet Mask
+IPAddress   gateway               (192, 168, 1, 1);     // Default Gateway
+IPAddress   local_IP              (192, 168, 1, 184);   // Static IP Address for ESP8266
 
 
 WiFiClient espClient;
