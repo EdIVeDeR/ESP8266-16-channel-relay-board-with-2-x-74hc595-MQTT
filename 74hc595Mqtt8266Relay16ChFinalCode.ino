@@ -1,3 +1,11 @@
+/*
+Change clientId value at line# 11, to make it the only one with this name on your network
+Change clientId value at line# 12, with your SSID network name
+Change clientId value at line# 13, with your Password network
+To make sure OTA will work you need to set Arduino IDE: Tool----Flash size----4MB (FS:1MB OTA:1019KB)
+To create OTA file you need to use in Arduino IDE: Sketch----Export Compiled Binary  or use CTRL+ALT+S shortcut and file will be in "build" directory of your sketch saved files
+*/
+
 #include "EspMQTTClient.h"
 
 const char* clientId =            "16ChRelay1";         // Change this ID, to make it the only one with this name on your network
