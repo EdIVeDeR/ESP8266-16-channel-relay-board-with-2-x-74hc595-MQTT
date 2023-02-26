@@ -64,7 +64,7 @@ EspMQTTClient client(
 // WARNING : YOU MUST IMPLEMENT IT IF YOU USE EspMQTTClient
 void onConnectionEstablished()
 {
-  client.publish(String(clientId) + String(topicOut), "16 Channels Relay Board is connect and listening on Topic "+String(clientId)+"In. Relay #1 is identify as relay 0 and #16 to 0"); // Publish a message to Topic put in variable topicOut. You can activate the retain flag by setting the third parameter to true
+  client.publish(String(clientId) + String(topicOut), "16 Channels Relay Board is connect and listening on Topic "+String(clientId)+"In. Relay #1 is identify as relay 0 and #16 to 15"); // Publish a message to Topic put in variable topicOut. You can activate the retain flag by setting the third parameter to true
   client.subscribe(String(clientId) + topicIn, [](const String & payload) { // Subscribe to topic insert in variable topicOut and display received message to Serial
   String str_msg = String(payload);
 
