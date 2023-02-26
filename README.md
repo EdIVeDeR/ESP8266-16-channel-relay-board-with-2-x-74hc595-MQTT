@@ -16,6 +16,8 @@ The main function of the code receive incoming messages from the subscribed MQTT
 
 The function first prints the received message to the serial console for debugging purposes and MQTT topic out. Then, it checks the content of the message to identify which relay(s) to switch ON or OFF. If the message contains "ALL ON" or "ALL OFF", all relays are switched on or off, respectively. If the message contains "RELAY 1-8 ON", "RELAY 1-8 OFF", "RELAY 9-16 ON", or "RELAY 9-16 OFF", the specified relays are switched on or off accordingly using the setRelayState() function.
 
+In debug relay #1 is indentify to relay #0 and relay #16 to relay #15
+
 Overall, this code provides a simple and efficient way to control a 8 and 16-channel relay board through MQTT messages.
 
 All the valids command to send to the topic in:
