@@ -149,21 +149,21 @@ if (str_msg.equals("ALL ON")) {
 
 void setup()
 {
-  Serial.begin(115200);                                                                                       // Start serial monitor debug
+  Serial.begin(115200);                                                    // Start serial monitor debug
   Serial.println(mqttCommandTopic);
   Serial.println(mqttDebugTopic);
   pinMode(latchPin, OUTPUT);
   pinMode(clockPin, OUTPUT);
   pinMode(dataPin, OUTPUT);
   pinMode(oePin, OUTPUT);
-  digitalWrite(oePin, LOW);                                                                                   // enable outputs
-  for (int i = 0; i < 16; i++) {                                                                              // Switch all relays off to start
-    setRelayState(i, false);}                                                                                 // Switch all relays off to start
-  client.enableDebuggingMessages();                                                                           // Enable debugging messages sent to serial output
-  client.enableHTTPWebUpdater();                                                                              // Enable the web updater. User and password default to values of MQTTUsername and MQTTPassword. These can be overridded with enableHTTPWebUpdater("user", "password").
-  Serial.println(webUpdaterConnectionInformation);                                                            // Send to serial monitor information to connect to the local web site where you can update both firmware and code
-  //client.enableOTA();                                                                                       // Enable OTA (Over The Air) updates. Password defaults to MQTTPassword. Port is the default OTA port. Can be overridden with enableOTA("password", port).
-  client.enableLastWillMessage(mqttLastWillMessage, "I am going offline");                                    // You can activate the retain flag by setting the third parameter to true
+  digitalWrite(oePin, LOW);                                                // enable outputs
+  for (int i = 0; i < 16; i++) {                                           // Switch all relays off to start
+    setRelayState(i, false);}                                              // Switch all relays off to start
+  client.enableDebuggingMessages();                                        // Enable debugging messages sent to serial output
+  client.enableHTTPWebUpdater();                                           // Enable the web updater. User and password default to values of MQTTUsername and MQTTPassword. These can be overridded with enableHTTPWebUpdater("user", "password").
+  Serial.println(webUpdaterConnectionInformation);                         // Send to serial monitor information to connect to the local web site where you can update both firmware and code
+  //client.enableOTA();                                                    // Enable OTA (Over The Air) updates. Password defaults to MQTTPassword. Port is the default OTA port. Can be overridden with enableOTA("password", port).
+  client.enableLastWillMessage(mqttLastWillMessage, "I am going offline"); // You can activate the retain flag by setting the third parameter to true
 }
 
 void loop()
