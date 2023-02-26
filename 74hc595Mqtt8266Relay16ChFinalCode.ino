@@ -1,8 +1,8 @@
 #include "EspMQTTClient.h"
 
 const char* clientId =            "16ChRelay2";         // Change to make it the only one with this name on your network
-const char* ssid =                "NETGEAR39";          // Change this value with your SSID name
-const char* password =            "deepshrub409";       // Change this value with your Password
+const char* ssid =                "SSID";          // Change this value with your SSID name
+const char* password =            "PASSORD";       // Change this value with your Password
 const char* mqttServer =          "192.168.1.100";      // MQTT server adress
 const int   mqttPort =            1883;                 // MQTT server Port
 const char* mqttUser =            "your_MQTT_username"; // MQTT server username
