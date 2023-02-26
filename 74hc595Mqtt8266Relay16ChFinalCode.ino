@@ -1,8 +1,8 @@
 #include "EspMQTTClient.h"
 
-const char* clientId =            "16ChRelay2";         // Change to make it the only one with this name on your network
-const char* ssid =                "SSID";          // Change this value with your SSID name
-const char* password =            "PASSORD";       // Change this value with your Password
+const char* clientId =            "SSID";               // Change this ID, to make it the only one with this name on your network
+const char* ssid =                "PASSWORD";           // Change this value with your SSID name
+const char* password =            "deepshrub409";       // Change this value with your Password
 const char* mqttServer =          "192.168.1.100";      // MQTT server adress
 const int   mqttPort =            1883;                 // MQTT server Port
 const char* mqttUser =            "your_MQTT_username"; // MQTT server username
@@ -31,10 +31,10 @@ EspMQTTClient client(
 
 // Function that change the relay state after a valid Mqtt command by  
   void setRelayState(int relayNum, bool state) {
-  // Set the state of a relay
+// Set the state of a relay
   relayState[relayNum] = state;
 
-  // Update the shift registers with the new relay state
+// Update the shift registers with the new relay state
   byte outputData[numRegisters];
   for (int i = 0; i < numRegisters; i++) {
     outputData[i] = 0;
@@ -52,23 +52,21 @@ EspMQTTClient client(
   }
   digitalWrite(latchPin, HIGH);
 
-  // Publish the confirmation message
-  String message = String(relayNum) + " " + (state ? "ON" : "OFF");
-  client.publish(String(clientId) + topicIn,message.c_str());
 
+// Publish the confirmation message
+  String message = String(relayNum) + " " + (state ? "ON" : "OFF");
+  
 // Log the confirmation message to Serial for debugging
   Serial.println("Relay state changed: " + message);
+  client.publish(String(clientId) + String(topicOut),message);
 }
 // This function is called once everything is connected (Wifi and MQTT)
 // WARNING : YOU MUST IMPLEMENT IT IF YOU USE EspMQTTClient
 void onConnectionEstablished()
 {
-  client.publish(String(clientId) + String(topicIn), "16 Channels Relay Board is connect and listening on Topic "+String(clientId)+"In"); // Publish a message to Topic put in variable topicOut. You can activate the retain flag by setting the third parameter to true
-  client.subscribe(String(clientId) + topicIn, [](const String & payload) {                                                               // Subscribe to topic insert in variable topicOut and display received message to Serial
-  Serial.println(payload);
-  client.publish(String(clientId) + topicOut, payload);                                                                                   // Publish a message to Topic put in variable topicOut
+  client.publish(String(clientId) + String(topicOut), "16 Channels Relay Board is connect and listening on Topic "+String(clientId)+"In. Relay #1 is identify as relay 0 and #16 to 0"); // Publish a message to Topic put in variable topicOut. You can activate the retain flag by setting the third parameter to true
+  client.subscribe(String(clientId) + topicIn, [](const String & payload) { // Subscribe to topic insert in variable topicOut and display received message to Serial
   String str_msg = String(payload);
-  Serial.println(str_msg);
 
 // Extract command from string
 if (str_msg.equals("ALL ON")) {
@@ -123,17 +121,20 @@ if (str_msg.equals("ALL ON")) {
 
 void setup()
 {
-  Serial.begin(115200);       // Start serial monitor debug
+  Serial.begin(115200);                                                                                       // Start serial monitor debug
+  Serial.println("Send your commands to this topic " + String(clientId) + String(topicIn));
+  Serial.println("For debuging and state relay update, subscribe to " + String(clientId) + String(topicOut));
   pinMode(latchPin, OUTPUT);
   pinMode(clockPin, OUTPUT);
   pinMode(dataPin, OUTPUT);
   pinMode(oePin, OUTPUT);
-  digitalWrite(oePin, LOW);   // enable outputs
-  client.enableDebuggingMessages();                                                                  // Enable debugging messages sent to serial output
-  client.enableHTTPWebUpdater();                                                                     // Enable the web updater. User and password default to values of MQTTUsername and MQTTPassword. These can be overridded with enableHTTPWebUpdater("user", "password").
-  client.enableOTA();                                                                                // Enable OTA (Over The Air) updates. Password defaults to MQTTPassword. Port is the default OTA port. Can be overridden with enableOTA("password", port).
-  client.enableLastWillMessage((String(clientId) + String(topicOut)).c_str(), "I am going offline"); // You can activate the retain flag by setting the third parameter to true
-  
+  digitalWrite(oePin, LOW);                                                                                   // enable outputs
+  for (int i = 0; i < 16; i++) {                                                                              // Switch all relays off to start
+    setRelayState(i, false);}                                                                                 // Switch all relays off to start
+  client.enableDebuggingMessages();                                                                           // Enable debugging messages sent to serial output
+  client.enableHTTPWebUpdater();                                                                              // Enable the web updater. User and password default to values of MQTTUsername and MQTTPassword. These can be overridded with enableHTTPWebUpdater("user", "password").
+  client.enableOTA();                                                                                         // Enable OTA (Over The Air) updates. Password defaults to MQTTPassword. Port is the default OTA port. Can be overridden with enableOTA("password", port).
+  client.enableLastWillMessage((String(clientId) + String(topicOut)).c_str(), "I am going offline");          // You can activate the retain flag by setting the third parameter to true
 }
 
 void loop()
