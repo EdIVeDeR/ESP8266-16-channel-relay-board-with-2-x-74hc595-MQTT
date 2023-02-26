@@ -87,20 +87,27 @@ void onConnectionEstablished()
   String str_msg = String(payload);
 
 // Extract command from string
+
 if (str_msg.equals("ALL ON")) {
-  // Switch all relays on
+
+// Switch all relays on
+  
   for (int i = 0; i < 16; i++) {
     setRelayState(i, true);
   }
   Serial.println("All relays switched ON");
 } else if (str_msg.equals("ALL OFF")) {
-  // Switch all relays off
+
+// Switch all relays off
+
   for (int i = 0; i < 16; i++) {
     setRelayState(i, false);
   }
   Serial.println("All relays switched OFF");
 } else if (str_msg.startsWith("RELAY 1-8 ")) {
-  // Switch relays 1-8 on or off
+
+// Switch relays 1-8 on or off
+
   bool status = str_msg.endsWith("ON");
   for (int i = 0; i < 8; i++) {
     setRelayState(i, status);
@@ -111,7 +118,9 @@ if (str_msg.equals("ALL ON")) {
     Serial.println("Relays 1-8 switched OFF");
   }
 } else if (str_msg.startsWith("RELAY 9-16 ")) {
-  // Switch relays 9-16 on or off
+
+// Switch relays 9-16 on or off
+
   bool status = str_msg.endsWith("ON");
   for (int i = 8; i < 16; i++) {
     setRelayState(i, status);
@@ -123,7 +132,8 @@ if (str_msg.equals("ALL ON")) {
   }
 } else if (str_msg.startsWith("Relay #")) {
 
-  // Switch individual relays on or off
+// Switch individual relays on or off
+
   int relayNumber = str_msg.substring(7, 9).toInt();                                                          // Extract relay number from string
   relayNumber = relayNumber - 1;
   bool status = str_msg.endsWith("ON");
